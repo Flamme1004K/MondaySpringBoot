@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+/* RequiredArgsConstructor 와 AllArgsConstructor의 차이?
+*/
 
 @RestController
 @RequestMapping(value = "/reference")
@@ -27,7 +28,7 @@ public class ReferenceController {
         Account id = accountRepository.findByUserId(cn);
         if( id != null) {
             long userID = id.getId();
-            referenceService.saveRepository(userID, referenceDto);
+            referenceService.saveReference(userID, referenceDto);
         }else if (id == null){
             return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
         }
