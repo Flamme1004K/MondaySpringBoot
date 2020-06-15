@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reference extends AllDate {
+public class Reference extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +32,10 @@ public class Reference extends AllDate {
     private long writtenBy;
 
     @Column(name="is_deleted")
-    private String isDeleted;
+    private Boolean isDeleted;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="r_id")
-    private ReferenceFileLink fileLinks;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
+    private List<ReferenceFileLink> referenceFileLink;
 
 
 }

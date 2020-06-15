@@ -22,15 +22,15 @@ public class ReferenceController {
     @PostMapping(value = "/post/{cn}")
     public ResponseEntity saveBoard(
             @PathVariable(name ="cn") String cn,
-            ReferenceDto referenceDto
+            @RequestBody ReferenceDto referenceDto
     ) {
-        Account id = accountRepository.findByUserIdEquals(cn);
-        if(id != null) {
+        Account id = accountRepository.findByUserId(cn);
+        if( id != null) {
             long userID = id.getId();
             referenceService.saveRepository(userID, referenceDto);
         }else if (id == null){
-            return new ResponseEntity<>("fail", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("success", HttpStatus.OK);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 }

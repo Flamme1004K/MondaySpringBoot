@@ -23,6 +23,7 @@ public class ReferenceFileLink {
     @Column(nullable = false)
     private String link;
 
-    @Column(name="r_id", nullable = false)
-    private long rId;
+    @ManyToOne
+    @JoinColumn(name = "r_id")
+    private Reference reference;
 }

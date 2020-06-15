@@ -4,6 +4,9 @@ import com.themoim.board.domain.Reference;
 import com.themoim.board.domain.ReferenceFileLink;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @ToString
@@ -13,7 +16,7 @@ public class ReferenceDto {
     private long writtenId;
     private String title;
     private String content;
-    private String Link;
+    private List<String> Link;
 
     public Reference toEntity(long userId){
 
@@ -21,6 +24,7 @@ public class ReferenceDto {
                                         .writtenBy(userId)
                                         .title(title)
                                         .content(content)
+                                        .isDeleted(false)
                                         .build();
         return reference;
     }
