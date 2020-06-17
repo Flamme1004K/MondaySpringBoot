@@ -1,10 +1,11 @@
 package com.themoim.board.dto;
 
 import com.themoim.board.domain.Reference;
-import com.themoim.board.domain.ReferenceFileLink;
+import com.themoim.common.converter.BooleanToYNConverter;
 import lombok.*;
 
-import java.util.ArrayList;
+import javax.persistence.Convert;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Getter
@@ -14,7 +15,9 @@ import java.util.List;
 public class ReferenceDto {
 
     private long writtenId;
+    @NotBlank(message = "제목을 입력해주세요.")
     private String title;
+    @NotBlank(message = "내용을 입력해주세요.")
     private String content;
     private List<String> Link;
 
@@ -24,7 +27,6 @@ public class ReferenceDto {
                                         .writtenBy(userId)
                                         .title(title)
                                         .content(content)
-                                        .isDeleted(false)
                                         .build();
         return reference;
     }

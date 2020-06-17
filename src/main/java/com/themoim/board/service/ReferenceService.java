@@ -5,13 +5,11 @@ import com.themoim.board.domain.ReferenceFileLink;
 import com.themoim.board.dto.ReferenceDto;
 import com.themoim.board.repository.ReferenceFileLinkRepository;
 import com.themoim.board.repository.ReferenceRepository;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import javax.naming.NotContextException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -33,9 +31,9 @@ public class ReferenceService {
                 if (linksList != null && linksList.size() >0 ) {
                     for (String link : linksList) {
                         ReferenceFileLink referenceFileLink = ReferenceFileLink.builder()
-                                .reference(reference)
-                                .link(link)
-                                .build();
+                                                                                .reference(reference)
+                                                                                .link(link)
+                                                                                .build();
                         referenceFileLinkRepository.save(referenceFileLink);
                     }
                     logger.info("create fileLink Reference");

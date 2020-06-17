@@ -1,5 +1,6 @@
 package com.themoim.board.domain;
 
+import com.themoim.common.converter.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@Convert(converter= BooleanToYNConverter.class, attributeName = "isDeleted")
 public class Reference extends BaseTime {
 
     @Id
@@ -31,7 +33,8 @@ public class Reference extends BaseTime {
     @Column(name="written_by", nullable = false)
     private long writtenBy;
 
-    @Column(name="is_deleted")
+    @Column(name="is_deleted", columnDefinition = "VARCHAR(1) default false")
+//    @Convert(converter = BooleanToYNConverter.class)
     private Boolean isDeleted;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
