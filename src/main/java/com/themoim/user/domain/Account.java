@@ -45,8 +45,4 @@ public class Account {
     @Column(name="lastLogin_at")
     private Date lastLoginAt;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="written_by")
-    private List<Reference> referencesList;
-
 }

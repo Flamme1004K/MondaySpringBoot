@@ -1,5 +1,6 @@
 package com.themoim.board.dto;
 
+import com.themoim.board.domain.Reference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,4 +18,6 @@ public class ReferenceRespDto {
     private String writeName;
     private String title;
 
+    public ReferenceRespDto(Reference reference) {
+    }
 }

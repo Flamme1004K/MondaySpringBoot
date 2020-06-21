@@ -10,6 +10,7 @@ import java.util.List;
 public interface ReferenceRepository extends JpaRepository<Reference, Long> {
 
     @Override
-    @Query("select m,a from Reference m join fetch Account a on m.writtenBy = a.id")
+    @Query("select m, a from Reference m join Account a on m.writtenBy.id = a.id")
     List<Reference> findAll();
+    //? DTO용 Repository도 만드는 경우도 있으띾?
 }

@@ -35,8 +35,9 @@ public class Reference extends BaseTime {
     @Lob
     private String content;
 
-    @Column(name="written_by", nullable = false)
-    private long writtenBy;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="written_by")
+    private Account writtenBy;
 
     @Column(name="is_deleted", columnDefinition = "VARCHAR(1) default false")
     //@Convert(converter = BooleanToYNConverter.class)

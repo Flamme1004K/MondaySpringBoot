@@ -9,6 +9,8 @@ import com.themoim.board.service.ReferenceService;
 import com.themoim.user.domain.Account;
 import com.themoim.user.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,25 +42,22 @@ public class ReferenceController {
             @PathVariable(name ="cn") String cn,
             @Valid @RequestBody ReferenceDto referenceDto
     ) {
-        Account id = accountRepository.findByUserId(cn);
-        if( id != null) {
-            long userID = id.getId();
-            referenceService.saveReference(userID, referenceDto);
-        }else if (id == null){
+        Account account = accountRepository.findByUserId(cn);
+        if( account != null) {
+            referenceService.saveReference(account, referenceDto);
+        }else if (account == null){
             return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
     @GetMapping(value="/board")
-    public ResponseEntity boardList(){
-        List<Reference> referenceList = referenceService.referencesList();
-        List<ReferenceRespDto> referenceDtoList =
-                referenceList.stream().map(reference -> new ReferenceRespDto(
-                        reference.getId(),
-                        reference.getContent(),
-                        reference.getTitle()))
-                        .collect(Collectors.toList());
+    public ResponseEntity boardList(
+            final Pageable pageable
+            ){
+        Page<ReferenceRespDto> referenceDtoList =
+                referenceService.referencesList(pageable).map(
+                        reference -> new ReferenceRespDto(reference.getId(), reference.getWrittenBy().getUsername() ,reference.getTitle()));
         return  new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
     }
 }

@@ -5,9 +5,13 @@ import com.themoim.board.domain.ReferenceFileLink;
 import com.themoim.board.dto.ReferenceDto;
 import com.themoim.board.repository.ReferenceFileLinkRepository;
 import com.themoim.board.repository.ReferenceRepository;
+import com.themoim.user.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +26,10 @@ public class ReferenceService {
     private final ReferenceFileLinkRepository referenceFileLinkRepository;
 
     @Transactional
-    public void saveReference(Long userId, ReferenceDto referenceDto){
+    public void saveReference(Account account, ReferenceDto referenceDto){
         logger.info("saveReference start");
         try {
-        Reference reference =  referenceRepository.save(referenceDto.toEntity(userId));
+        Reference reference =  referenceRepository.save(referenceDto.toEntity(account));
             if (reference != null) {
                 List<String> linksList = referenceDto.getLink();
                 if (linksList != null && linksList.size() >0 ) {
@@ -50,8 +54,9 @@ public class ReferenceService {
     }
 
     @Transactional(readOnly = true)
-    public List<Reference> referencesList() {
-        return referenceRepository.findAll();
+    public Page<Reference> referencesList(Pageable pageable) {
+
+        return referenceRepository.findAll(pageable);
     }
 
 }

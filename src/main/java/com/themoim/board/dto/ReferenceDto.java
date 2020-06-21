@@ -2,6 +2,7 @@ package com.themoim.board.dto;
 
 import com.themoim.board.domain.Reference;
 import com.themoim.common.converter.BooleanToYNConverter;
+import com.themoim.user.domain.Account;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -26,10 +27,10 @@ public class ReferenceDto {
         this.content = content;
     }
 
-    public Reference toEntity(long userId){
+    public Reference toEntity(Account account){
 
         Reference reference = Reference.builder()
-                                        .writtenBy(userId)
+                                        .writtenBy(account)
                                         .title(title)
                                         .content(content)
                                         .build();
