@@ -1,5 +1,6 @@
 package com.themoim.board.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,5 +26,6 @@ public class ReferenceFileLink {
 
     @ManyToOne
     @JoinColumn(name = "r_id")
+    @JsonBackReference
     private Reference reference;
 }

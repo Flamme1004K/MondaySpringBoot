@@ -9,12 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class ReferenceService {
 
@@ -22,6 +21,7 @@ public class ReferenceService {
     private final ReferenceRepository referenceRepository;
     private final ReferenceFileLinkRepository referenceFileLinkRepository;
 
+    @Transactional
     public void saveReference(Long userId, ReferenceDto referenceDto){
         logger.info("saveReference start");
         try {
@@ -47,6 +47,11 @@ public class ReferenceService {
             logger.info("No Reference ");
         }
         logger.info("saveReference end");
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reference> referencesList() {
+        return referenceRepository.findAll();
     }
 
 }

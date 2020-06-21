@@ -1,6 +1,10 @@
 package com.themoim.board.web;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.themoim.board.domain.BaseTime;
+import com.themoim.board.domain.Reference;
 import com.themoim.board.dto.ReferenceDto;
+import com.themoim.board.dto.ReferenceRespDto;
 import com.themoim.board.service.ReferenceService;
 import com.themoim.user.domain.Account;
 import com.themoim.user.repository.AccountRepository;
@@ -10,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 RequiredArgsConstructor 와 AllArgsConstructor의 차이?
@@ -42,5 +48,17 @@ public class ReferenceController {
             return new ResponseEntity<>("Fail", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
+
+    @GetMapping(value="/board")
+    public ResponseEntity boardList(){
+        List<Reference> referenceList = referenceService.referencesList();
+        List<ReferenceRespDto> referenceDtoList =
+                referenceList.stream().map(reference -> new ReferenceRespDto(
+                        reference.getId(),
+                        reference.getContent(),
+                        reference.getTitle()))
+                        .collect(Collectors.toList());
+        return  new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
     }
 }

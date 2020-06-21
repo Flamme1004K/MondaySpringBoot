@@ -5,7 +5,8 @@ import javax.persistence.Convert;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class BooleanToYNConverter implements AttributeConverter<Boolean, String> {
+//@Convert
+public class BooleanToYNConverter implements AttributeConverter<Boolean, String>{
 
     @Override
     public String convertToDatabaseColumn(Boolean attribute) {
