@@ -1,11 +1,17 @@
 package com.themoim.board.service;
 
+import com.querydsl.core.QueryFactory;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.themoim.board.domain.QReference;
 import com.themoim.board.domain.Reference;
 import com.themoim.board.domain.ReferenceFileLink;
 import com.themoim.board.dto.ReferenceDto;
+import com.themoim.board.dto.ReferenceRespDto;
 import com.themoim.board.repository.ReferenceFileLinkRepository;
 import com.themoim.board.repository.ReferenceRepository;
+import com.themoim.board.repository.ReferenceRepositorySupport;
 import com.themoim.user.domain.Account;
+import com.themoim.user.domain.QAccount;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +30,7 @@ public class ReferenceService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private final ReferenceRepository referenceRepository;
     private final ReferenceFileLinkRepository referenceFileLinkRepository;
-
+    private final ReferenceRepositorySupport referenceRepositorySupport;
     @Transactional
     public void saveReference(Account account, ReferenceDto referenceDto){
         logger.info("saveReference start");
@@ -54,9 +60,14 @@ public class ReferenceService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Reference> referencesList(Pageable pageable) {
-
-        return referenceRepository.findAll(pageable);
+    public List<ReferenceRespDto> referencesList(Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page,size);
+        return referenceRepository.findAll(pageRequest).map(
+                reference -> new ReferenceRespDto(
+                        reference.getId(),
+                        reference.getWrittenBy().getUsername(),
+                        reference.getTitle()
+                )).getContent();
     }
 
 }

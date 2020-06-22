@@ -18,6 +18,4 @@ public class ReferenceRespDto {
     private String writeName;
     private String title;
 
-    public ReferenceRespDto(Reference reference) {
-    }
 }

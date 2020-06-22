@@ -9,15 +9,12 @@ import com.themoim.board.service.ReferenceService;
 import com.themoim.user.domain.Account;
 import com.themoim.user.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /*
 RequiredArgsConstructor 와 AllArgsConstructor의 차이?
@@ -51,13 +48,12 @@ public class ReferenceController {
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
-    @GetMapping(value="/board")
+    @GetMapping
     public ResponseEntity boardList(
-            final Pageable pageable
+            @RequestParam Integer page,
+            @RequestParam Integer size
             ){
-        Page<ReferenceRespDto> referenceDtoList =
-                referenceService.referencesList(pageable).map(
-                        reference -> new ReferenceRespDto(reference.getId(), reference.getWrittenBy().getUsername() ,reference.getTitle()));
-        return  new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
+        List<ReferenceRespDto> referenceDtoList = referenceService.referencesList(page, size);
+        return new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
     }
 }
