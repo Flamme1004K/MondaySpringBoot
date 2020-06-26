@@ -6,10 +6,10 @@ import javax.persistence.PrePersist;
 public class DefaultListener {
     @PrePersist
     private void prePersist(Object obj) {
-        System.out.println("prePersist = "+obj);
+        System.out.println("prePersist = "+obj.toString());
     }
     @PostPersist
     private void postPersist(Object obj) {
-        System.out.println("postPersist = "+obj);
+        System.out.println("postPersist = "+obj.toString());
     }
 }
