@@ -1,10 +1,7 @@
 package com.themoim.board.dto;
 
 import com.themoim.board.domain.Reference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -13,6 +10,7 @@ import java.util.Optional;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ReferenceRespDto {
     private long writeNo;
     private String writeName;
