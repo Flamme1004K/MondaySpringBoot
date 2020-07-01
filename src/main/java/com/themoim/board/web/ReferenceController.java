@@ -58,4 +58,11 @@ public class ReferenceController {
         List<ReferenceRespDto> referenceDtoList = referenceService.referencesList(page, size);
         return new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
     }
+//
+//    @PutMapping
+//    public ResponseEntity boardUpdate(
+//        @RequestBody final ReferenceDto.req req
+//    ){
+//        referenceService.saveReference();
+//    }
 }

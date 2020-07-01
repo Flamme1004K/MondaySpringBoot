@@ -32,7 +32,7 @@ public class ReferenceService {
     @Transactional
     public void saveReference(String cn, ReferenceDto referenceDto){
         logger.info("saveReference start");
-        try {
+
             Account account = accountRepository.findByUserId(cn).orElseThrow(NullPointerException::new);
             Reference reference = referenceRepository.save(referenceDto.toEntity(account));
                 if (reference != null) {
@@ -50,10 +50,6 @@ public class ReferenceService {
                 } else {
                     throw new NullPointerException();
                 }
-        } catch (NullPointerException e) {
-            logger.info("saveReference fail");
-        }
-        logger.info("saveReference end");
     }
     @Transactional(readOnly = true)
     public List<ReferenceRespDto> referencesList(Integer page, Integer size) {
@@ -66,5 +62,4 @@ public class ReferenceService {
                         .title(reference.getTitle()).build()
                 ).getContent();
     }
-
 }

@@ -14,27 +14,39 @@ import java.util.List;
 @ToString
 public class ReferenceDto {
 
-    private long writtenId;
-    @NotBlank(message = "제목을 입력해주세요.")
-    private String title;
-    @NotBlank(message = "내용을 입력해주세요.")
-    private String content;
-    private List<String> Link = new ArrayList<>();
+        private long writtenId;
+        @NotBlank(message = "제목을 입력해주세요.")
+        private String title;
+        @NotBlank(message = "내용을 입력해주세요.")
+        private String content;
+        private List<String> Link = new ArrayList<>();
 
-    public ReferenceDto(long writtenId,String title, String content) {
-        this.writtenId = writtenId;
-        this.title = title;
-        this.content = content;
-    }
+        public ReferenceDto(long writtenId,String title, String content) {
+            this.writtenId = writtenId;
+            this.title = title;
+            this.content = content;
+        }
 
-    public Reference toEntity(Account account){
+        public Reference toEntity(Account account){
 
-        Reference reference = Reference.builder()
-                                        .writtenBy(account)
-                                        .title(title)
-                                        .content(content)
-                                        .build();
-        return reference;
-    }
+            Reference reference = Reference.builder()
+                                            .writtenBy(account)
+                                            .title(title)
+                                            .content(content)
+                                            .build();
+            return reference;
+        }
+
+        @Getter
+        public static class req {
+            private String title;
+            private String content;
+
+            @Builder
+            public req(String title, String content) {
+                this.title = title;
+                this.content = content;
+            }
+        }
 
 }
