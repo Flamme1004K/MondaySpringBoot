@@ -1,13 +1,10 @@
 package com.themoim.board.web;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.themoim.board.domain.BaseTime;
-import com.themoim.board.domain.Reference;
 import com.themoim.board.dto.ReferenceDto;
 import com.themoim.board.dto.ReferenceRespDto;
 import com.themoim.board.service.ReferenceService;
-import com.themoim.user.domain.Account;
-import com.themoim.user.repository.AccountRepository;
+import com.themoim.common.response.ResponseMessage;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /*
 TODO : RequiredArgsConstructor 와 AllArgsConstructor의 차이?
@@ -30,18 +25,18 @@ TODO : 람다 포맷
 TODO : 타입시스템이 잘되어있는 언어에서 왜 타입이 잘 안되어있을까? --> 제네릭
 TODO : 리스폰스 , Exceoption 핸들러만들기
 see 쓰는법
-
-
 */
 
 
-
 @RestController
-@RequestMapping(value = "/reference")
+@RequestMapping(value = "/api/v1/reference")
 @RequiredArgsConstructor
 public class ReferenceController {
+
     private final ReferenceService referenceService;
-    @PostMapping(value = "/post/{cn}")
+
+    @ApiOperation(value="saveBoard", notes = "게시판 저장")
+    @PostMapping(value = "/{cn}")
     public ResponseEntity saveBoard(
             @PathVariable(name ="cn") String cn,
             @Valid @RequestBody ReferenceDto referenceDto
@@ -50,19 +45,23 @@ public class ReferenceController {
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
+    @ApiOperation(value="boardList", notes = "게시판 조회")
     @GetMapping
-    public ResponseEntity boardList(
-            @RequestParam Integer page,
-            @RequestParam Integer size
+    public ResponseMessage<List<ReferenceRespDto>> boardList(
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "5") Integer size
             ){
         List<ReferenceRespDto> referenceDtoList = referenceService.referencesList(page, size);
-        return new ResponseEntity<>(referenceDtoList,HttpStatus.OK);
+        ResponseMessage<List<ReferenceRespDto>> resp = ResponseMessage.ok(referenceDtoList);
+        return resp;
     }
-//
-//    @PutMapping
-//    public ResponseEntity boardUpdate(
-//        @RequestBody final ReferenceDto.req req
-//    ){
-//        referenceService.saveReference();
-//    }
+
+    @ApiOperation(value="updateBoard", notes = "게시판 수정")
+    @PutMapping(value = "/{boardNum}")
+    public ResponseEntity boardUpdate(
+            @PathVariable(name ="boardNum") long boardNum,
+            @RequestBody ReferenceDto.req req) {
+        referenceService.updateBoard(boardNum,req);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
 }
