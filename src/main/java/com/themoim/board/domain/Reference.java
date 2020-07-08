@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.themoim.common.converter.BooleanToYNConverter;
 import com.themoim.common.listener.DefaultListener;
 import com.themoim.user.domain.Account;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.List;
 @Entity
 @Table
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +34,7 @@ public class Reference extends BaseTime {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="written_by")
+    @JoinColumn(name="a_id")
     private Account writtenBy;
 
     @Column(name="is_deleted", columnDefinition = "VARCHAR(1) default false")

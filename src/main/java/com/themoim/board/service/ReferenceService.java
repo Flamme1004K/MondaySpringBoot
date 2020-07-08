@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -61,5 +62,12 @@ public class ReferenceService {
                         .writeName(reference.getWrittenBy().getUsername())
                         .title(reference.getTitle()).build()
                 ).getContent();
+    }
+
+    @Transactional
+        public void updateBoard(long boardNum, ReferenceDto.req req) {
+        Reference reference = referenceRepository.findById(boardNum).get();
+        reference.setTitle(req.getTitle());
+        reference.setContent(req.getContent());
     }
 }

@@ -8,9 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Table
@@ -40,9 +38,9 @@ public class Account {
     private String phoneNumber;
 
     @Column(name="created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name="lastLogin_at")
-    private Date lastLoginAt;
+    private LocalDateTime lastLoginAt;
 
 }
