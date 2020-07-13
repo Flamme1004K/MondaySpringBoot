@@ -30,6 +30,10 @@ public class ReferenceService {
     private final ReferenceFileLinkRepository referenceFileLinkRepository;
 
 
+    /*
+    2020/07/13 코드는 스토리가 있게 하기
+    */
+
     @Transactional
     public void saveReference(String cn, ReferenceDto referenceDto){
         logger.info("saveReference start");
@@ -56,18 +60,38 @@ public class ReferenceService {
     public List<ReferenceRespDto> referencesList(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return referenceRepository.findAll(pageRequest).map(
+                ReferenceRespDto::new
+                ).getContent();
+    }
+
+
+                /*
                 reference -> ReferenceRespDto
                         .builder()
                         .writeNo(reference.getId())
                         .writeName(reference.getWrittenBy().getUsername())
                         .title(reference.getTitle()).build()
-                ).getContent();
-    }
+                 */
 
+    /*
+    회사 소스에서 익셉션 레스트 컨트롤 어드바이스를 찾아보자.
+    * */
     @Transactional
-        public void updateBoard(long boardNum, ReferenceDto.req req) {
-        Reference reference = referenceRepository.findById(boardNum).get();
-        reference.setTitle(req.getTitle());
-        reference.setContent(req.getContent());
+    public void updateBoard(long boardNum, ReferenceDto.req req) {
+        /*
+        referenceRepository.findById(boardNum).map(referenceChange -> {
+            referenceChange.setTitle((req.getTitle()));
+            referenceChange.setContent((req.getContent()));
+            return referenceChange;
+        }).orElseThrow(NullPointerException::new);
+         */
+        boolean reference = referenceRepository.findById(boardNum).isPresent();
+        if(reference) {
+            Reference reference1 = new Reference();
+            reference1.setContent(req.getContent());
+            reference1.setTitle(req.getTitle());
+        } else {
+            throw new NullPointerException();
+        }
     }
 }
