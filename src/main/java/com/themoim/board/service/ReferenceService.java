@@ -13,6 +13,7 @@ import org.hibernate.annotations.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,6 +77,12 @@ public class ReferenceService {
     /*
     회사 소스에서 익셉션 레스트 컨트롤 어드바이스를 찾아보자.
     * */
+
+    @Transactional(readOnly = true)
+    public ReferenceRespDto reference(long id) {
+        Reference reference = referenceRepository.findById(id).get();
+        return ReferenceRespDto.builder().writeNo(reference.getId()).title(reference.getTitle()).writeName(reference.getWrittenBy().getUsername()).build();
+    }
     @Transactional
     public void updateBoard(long boardNum, ReferenceDto.req req) {
         /*

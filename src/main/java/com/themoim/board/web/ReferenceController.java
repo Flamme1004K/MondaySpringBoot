@@ -56,6 +56,15 @@ public class ReferenceController {
         return resp;
     }
 
+    @ApiOperation(value="readBoard", notes = "게시글 일기")
+    public ResponseMessage<ReferenceRespDto> readBoard(
+            @PathVariable (name = "boardNum") long boardNum
+    ) {
+        ReferenceRespDto referenceRespDto = referenceService.reference(boardNum);
+        ResponseMessage<ReferenceRespDto> resp = ResponseMessage.ok(referenceRespDto);
+        return resp;
+    }
+
     @ApiOperation(value="updateBoard", notes = "게시판 수정")
     @PutMapping(value = "/{boardNum}")
     public ResponseEntity boardUpdate(
