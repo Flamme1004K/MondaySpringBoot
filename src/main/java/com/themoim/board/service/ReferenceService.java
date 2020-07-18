@@ -1,6 +1,8 @@
 package com.themoim.board.service;
 
 import com.themoim.board.domain.Reference;
+import com.themoim.board.domain.ReferenceFileLink;
+import com.themoim.board.dto.FileLinkDTO;
 import com.themoim.board.dto.ReferenceDto;
 import com.themoim.board.dto.ReferenceRespDto;
 import com.themoim.board.repository.ReferenceFileLinkRepository;
@@ -58,6 +60,18 @@ public class ReferenceService {
          */
 
         Account account = accountRepository.findByUserId(cn).orElseThrow(()->new NotFoundException("회원을 찾을 수 없습니다."));
+        Reference reference = referenceRepository.save(req.toEntity(account));
+        List<FileLinkDTO.Req> fileLinkDTO = req.getFile();
+            if(fileLinkDTO.size() > 0) {
+                for (FileLinkDTO.Req fileReq: fileLinkDTO ) {
+                    ReferenceFileLink fileLink = ReferenceFileLink.builder()
+                                                                    .reference(reference)
+                                                                    .link(fileReq.getLinkDomain())
+                                                                    .build();
+
+                    referenceFileLinkRepository.save(fileLink);
+                }
+            }
     }
     @Transactional(readOnly = true)
     public List<ReferenceRespDto> referencesList(Integer page, Integer size) {

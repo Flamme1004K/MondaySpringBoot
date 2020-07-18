@@ -48,12 +48,11 @@ public class ReferenceDto {
                 this.file = file;
             }
 
-            public Reference toEntity(Account account, List<ReferenceFileLink> fileLinks){
+            public Reference toEntity(Account account){
                 Reference reference = Reference.builder()
                         .writtenBy(account)
                         .title(title)
                         .content(content)
-                        .referenceFileLink(fileLinks)
                         .build();
                 return reference;
 
