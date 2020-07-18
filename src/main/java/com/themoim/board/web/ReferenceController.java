@@ -1,5 +1,6 @@
 package com.themoim.board.web;
 
+import com.themoim.board.domain.Reference;
 import com.themoim.board.dto.ReferenceDTO;
 import com.themoim.board.service.ReferenceService;
 import com.themoim.common.response.ResponseMessage;
@@ -48,26 +49,27 @@ public class ReferenceController {
 
     @ApiOperation(value="boardList", notes = "게시판 조회")
     @GetMapping
-    public ResponseMessage<Page<ReferenceDTO.ListResp>> boardList(
+    public ResponseMessage<List<ReferenceDTO.ListResp>> boardList(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size
             ){
-        Page<ReferenceDTO.ListResp> referenceDtoList = referenceService.referencesList(page, size);
-        ResponseMessage<Page<ReferenceDTO.ListResp>> resp = ResponseMessage.ok(referenceDtoList);
+        List<ReferenceDTO.ListResp> referenceDtoList = referenceService.referencesList(page, size);
+        ResponseMessage<List<ReferenceDTO.ListResp>> resp = ResponseMessage.ok(referenceDtoList);
         return resp;
     }
 
-    /*
+
     @ApiOperation(value="readBoard", notes = "게시글 읽기")
-    public ResponseMessage<ReferenceRespDto> readBoard(
+    @GetMapping(value = "/{boardNum}")
+    public ResponseMessage<ReferenceDTO.Resp> readBoard(
             @PathVariable (name = "boardNum") long boardNum
     ) {
-        ReferenceRespDto referenceRespDto = referenceService.reference(boardNum);
-        ResponseMessage<ReferenceRespDto> resp = ResponseMessage.ok(referenceRespDto);
+        ReferenceDTO.Resp referenceRespDto = referenceService.reference(boardNum);
+        ResponseMessage<ReferenceDTO.Resp> resp = ResponseMessage.ok(referenceRespDto);
         return resp;
     }
 
-     */
+
 
     @ApiOperation(value="updateBoard", notes = "게시판 수정")
     @PutMapping(value = "/{boardNum}")

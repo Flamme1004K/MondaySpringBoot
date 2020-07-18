@@ -1,6 +1,5 @@
 package com.themoim.board.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +25,12 @@ public class FileLinkDTO {
     @NoArgsConstructor
     public static class Req{
 
+        private long id;
         private String linkDomain;
 
         @Builder
-        public Req(String linkDomain) {
+        public Req(long id, String linkDomain) {
+            this.id = id;
             this.linkDomain = linkDomain;
         }
     }

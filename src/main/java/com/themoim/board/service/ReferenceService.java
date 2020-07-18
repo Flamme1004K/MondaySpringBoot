@@ -145,7 +145,29 @@ public class ReferenceService {
         } else {
             throw new NullPointerException();
         }
-        
+
          */
+        Reference reference = referenceRepository.findById(boardNum).map(
+                referenceChange -> {
+                    referenceChange.setTitle((req.getTitle()));
+                    referenceChange.setContent(req.getContent());
+                    return  referenceChange;
+                }
+        ).orElseThrow(NullPointerException::new);
+
+        if(req.getFile().size()>0) {
+            for(FileLinkDTO.Req file : req.getFile()) {
+                referenceFileLinkRepository.findById(file.getId()).map(
+                        fileLink -> {
+                            fileLink.update(file.getLinkDomain());
+                            return fileLink;
+                        }
+                ).orElseGet(
+                       ReferenceFileLink::new
+                );
+            }
+        }
+
+
     }
 }
