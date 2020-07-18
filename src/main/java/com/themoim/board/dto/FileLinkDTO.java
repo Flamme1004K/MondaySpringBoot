@@ -11,27 +11,25 @@ public class FileLinkDTO {
     @Getter
     @NoArgsConstructor
     public static class Resp {
-        String linkName;
+        private long id;
         String linkDomain;
 
         @Builder
-        public Resp(String linkName, String linkDomain) {
-            this.linkName = linkName;
+        public Resp(long id, String linkDomain) {
+            this.id = id;
             this.linkDomain = linkDomain;
         }
+
     }
 
     @Getter
     @NoArgsConstructor
     public static class Req{
-        private long id;
-        private String linkName;
+
         private String linkDomain;
 
         @Builder
-        public Req(long id, String linkName, String linkDomain) {
-            this.id = id;
-            this.linkName = linkName;
+        public Req(String linkDomain) {
             this.linkDomain = linkDomain;
         }
     }

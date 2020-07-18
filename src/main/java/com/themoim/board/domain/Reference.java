@@ -1,9 +1,7 @@
 package com.themoim.board.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.themoim.board.dto.ReferenceDto;
-import com.themoim.common.converter.BooleanToYNConverter;
-import com.themoim.common.listener.DefaultListener;
+import com.themoim.board.dto.ReferenceDTO;
 import com.themoim.user.domain.Account;
 import lombok.*;
 
@@ -53,7 +51,7 @@ public class Reference extends BaseTime {
     업데이트 구문 ->
 
     */
-    public void update(ReferenceDto.Req req) {
+    public void update(ReferenceDTO.Req req) {
         this.title = req.getTitle();
         this.content = req.getContent();
     }
