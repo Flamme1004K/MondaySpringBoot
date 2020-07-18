@@ -1,7 +1,6 @@
 package com.themoim.board.web;
 
-import com.themoim.board.dto.ReferenceDto;
-import com.themoim.board.dto.ReferenceRespDto;
+import com.themoim.board.dto.ReferenceDTO;
 import com.themoim.board.service.ReferenceService;
 import com.themoim.common.response.ResponseMessage;
 import io.swagger.annotations.ApiOperation;
@@ -40,7 +39,7 @@ public class ReferenceController {
     @PostMapping(value = "/{cn}")
     public ResponseEntity saveBoard(
             @PathVariable(name ="cn") String cn,
-            @Valid @RequestBody ReferenceDto.Req req
+            @Valid @RequestBody ReferenceDTO.Req req
     ) throws NotFoundException {
         referenceService.saveReference(cn, req);
         return new ResponseEntity<>("Success", HttpStatus.OK);
@@ -48,16 +47,17 @@ public class ReferenceController {
 
     @ApiOperation(value="boardList", notes = "게시판 조회")
     @GetMapping
-    public ResponseMessage<List<ReferenceRespDto>> boardList(
+    public ResponseMessage<List<ReferenceDTO.ListResp>> boardList(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size
             ){
-        List<ReferenceRespDto> referenceDtoList = referenceService.referencesList(page, size);
-        ResponseMessage<List<ReferenceRespDto>> resp = ResponseMessage.ok(referenceDtoList);
+        List<ReferenceDTO.ListResp> referenceDtoList = referenceService.referencesList(page, size);
+        ResponseMessage<List<ReferenceDTO.ListResp>> resp = ResponseMessage.ok(referenceDtoList);
         return resp;
     }
 
-    @ApiOperation(value="readBoard", notes = "게시글 일기")
+    /*
+    @ApiOperation(value="readBoard", notes = "게시글 읽기")
     public ResponseMessage<ReferenceRespDto> readBoard(
             @PathVariable (name = "boardNum") long boardNum
     ) {
@@ -66,11 +66,13 @@ public class ReferenceController {
         return resp;
     }
 
+     */
+
     @ApiOperation(value="updateBoard", notes = "게시판 수정")
     @PutMapping(value = "/{boardNum}")
     public ResponseEntity boardUpdate(
             @PathVariable(name ="boardNum") long boardNum,
-            @RequestBody ReferenceDto.Req req) {
+            @RequestBody ReferenceDTO.Req req) {
         referenceService.updateBoard(boardNum,req);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }

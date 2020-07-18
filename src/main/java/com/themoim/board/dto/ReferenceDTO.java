@@ -7,13 +7,31 @@ import com.themoim.user.domain.Account;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @ToString
-public class ReferenceDto {
+public class ReferenceDTO {
+
+        @Getter
+        @NoArgsConstructor
+        public static class ListResp {
+            private Long no;
+            private String title;
+            private String writtenName;
+            private LocalDateTime createDate;
+
+            @Builder
+            public ListResp(Long no, String title, String writtenName, LocalDateTime createDate ) {
+                this.no = no;
+                this.title = title;
+                this.writtenName = writtenName;
+                this.createDate = createDate;
+            }
+        }
 
         @Getter
         @NoArgsConstructor
