@@ -6,6 +6,7 @@ import com.themoim.common.response.ResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,12 +48,12 @@ public class ReferenceController {
 
     @ApiOperation(value="boardList", notes = "게시판 조회")
     @GetMapping
-    public ResponseMessage<List<ReferenceDTO.ListResp>> boardList(
+    public ResponseMessage<Page<ReferenceDTO.ListResp>> boardList(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "5") Integer size
             ){
-        List<ReferenceDTO.ListResp> referenceDtoList = referenceService.referencesList(page, size);
-        ResponseMessage<List<ReferenceDTO.ListResp>> resp = ResponseMessage.ok(referenceDtoList);
+        Page<ReferenceDTO.ListResp> referenceDtoList = referenceService.referencesList(page, size);
+        ResponseMessage<Page<ReferenceDTO.ListResp>> resp = ResponseMessage.ok(referenceDtoList);
         return resp;
     }
 

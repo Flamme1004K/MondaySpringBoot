@@ -12,6 +12,7 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,16 +72,13 @@ public class ReferenceService {
             }
     }
 
-    /*
     @Transactional(readOnly = true)
-    public List<ReferenceDTO.ListResp> referencesList(Integer page, Integer size) {
+    public Page<ReferenceDTO.ListResp> referencesList(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return referenceRepository.findAll(pageRequest).map(
                 ReferenceDTO.ListResp::new
-                ).getContent();
+        );
     }
-    
-     */
 
 
                 /*
