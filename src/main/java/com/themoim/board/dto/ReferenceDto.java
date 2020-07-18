@@ -1,6 +1,7 @@
 package com.themoim.board.dto;
 
 import com.themoim.board.domain.Reference;
+import com.themoim.board.domain.ReferenceFileLink;
 import com.themoim.common.converter.BooleanToYNConverter;
 import com.themoim.user.domain.Account;
 import lombok.*;
@@ -14,38 +15,48 @@ import java.util.List;
 @ToString
 public class ReferenceDto {
 
-        private long writtenId;
-        @NotBlank(message = "제목을 입력해주세요.")
-        private String title;
-        @NotBlank(message = "내용을 입력해주세요.")
-        private String content;
-        private List<String> Link = new ArrayList<>();
+        @Getter
+        @NoArgsConstructor
+        public static class Resp {
+            private long writtenId;
+            private String title;
+            private String content;
+            private List<FileLinkDTO.Resp> file = new ArrayList<>();
 
-        public ReferenceDto(long writtenId,String title, String content) {
-            this.writtenId = writtenId;
-            this.title = title;
-            this.content = content;
-        }
-
-        public Reference toEntity(Account account){
-
-            Reference reference = Reference.builder()
-                                            .writtenBy(account)
-                                            .title(title)
-                                            .content(content)
-                                            .build();
-            return reference;
+            @Builder
+            public Resp(long writtenId, String title, String content, List<FileLinkDTO.Resp> file) {
+                this.writtenId = writtenId;
+                this.title = title;
+                this.content = content;
+                this.file = file;
+            }
         }
 
         @Getter
-        public static class req {
+        @NoArgsConstructor
+        public static class Req {
+            private long writtenId;
             private String title;
             private String content;
+            private List<FileLinkDTO.Req> file = new ArrayList<>();
 
             @Builder
-            public req(String title, String content) {
+            public Req(long writtenId, String title, String content, List<FileLinkDTO.Req> file) {
+                this.writtenId = writtenId;
                 this.title = title;
                 this.content = content;
+                this.file = file;
+            }
+
+            public Reference toEntity(Account account, List<ReferenceFileLink> fileLinks){
+                Reference reference = Reference.builder()
+                        .writtenBy(account)
+                        .title(title)
+                        .content(content)
+                        .referenceFileLink(fileLinks)
+                        .build();
+                return reference;
+
             }
         }
 

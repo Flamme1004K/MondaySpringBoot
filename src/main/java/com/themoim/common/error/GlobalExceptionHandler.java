@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.nio.file.AccessDeniedException;
+
+/*
+*
+* GlobalException처리
+* */
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {

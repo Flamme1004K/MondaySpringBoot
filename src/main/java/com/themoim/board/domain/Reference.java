@@ -1,6 +1,7 @@
 package com.themoim.board.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.themoim.board.dto.ReferenceDto;
 import com.themoim.common.converter.BooleanToYNConverter;
 import com.themoim.common.listener.DefaultListener;
 import com.themoim.user.domain.Account;
@@ -44,5 +45,22 @@ public class Reference extends BaseTime {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
     @JsonManagedReference
     private List<ReferenceFileLink> referenceFileLink = new ArrayList<>();
+
+
+    /*
+
+    since : 2020/07/13
+    업데이트 구문 ->
+
+    */
+    public void update(ReferenceDto.Req req) {
+        this.title = req.getTitle();
+        this.content = req.getContent();
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
 }
