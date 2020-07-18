@@ -17,7 +17,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,14 +75,17 @@ public class ReferenceService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ReferenceDTO.ListResp> referencesList(Integer page, Integer size) {
+    public List<ReferenceDTO.ListResp> referencesList(Integer page, Integer size) {
         PageRequest pageRequest = PageRequest.of(page,size);
         return referenceRepository.findAll(pageRequest).map(
-                ReferenceDTO.ListResp::new
-        );
+                reference -> ReferenceDTO.ListResp.builder()
+                                                .no(reference.getId())
+                                                .writtenName(reference.getWrittenBy().getUsername())
+                                                .title(reference.getTitle())
+                                                .createDate(reference.getCreateAt())
+                                                .build()
+        ).getContent();
     }
-
-
                 /*
                 reference -> ReferenceRespDto
                         .builder()
@@ -93,14 +98,36 @@ public class ReferenceService {
     회사 소스에서 익셉션 레스트 컨트롤 어드바이스를 찾아보자.
     * */
 
-    /*
+
     @Transactional(readOnly = true)
-    public ReferenceRespDto reference(long id) {
+    public ReferenceDTO.Resp reference(long id) {
         Reference reference = referenceRepository.findById(id).get();
-        return ReferenceRespDto.builder().writeNo(reference.getId()).title(reference.getTitle()).writeName(reference.getWrittenBy().getUsername()).build();
+        List<ReferenceFileLink> fileLinks = reference.getReferenceFileLink();
+        if(fileLinks.size()>0) {
+            List<FileLinkDTO.Resp> fileRespList = new ArrayList<>();
+            for (ReferenceFileLink file : fileLinks
+                 ) {
+                FileLinkDTO.Resp fileResp = FileLinkDTO.Resp.builder().id(file.getId()).linkDomain(file.getLink()).build();
+                fileRespList.add(fileResp);
+            }
+            return ReferenceDTO.Resp.builder()
+                    .boardNo(reference.getId())
+                    .writtenName(reference.getWrittenBy().getUsername())
+                    .title(reference.getTitle())
+                    .content(reference.getContent())
+                    .file(fileRespList)
+                    .build();
+        } else {
+            return ReferenceDTO.Resp.builder()
+                    .boardNo(reference.getId())
+                    .writtenName(reference.getWrittenBy().getUsername())
+                    .title(reference.getTitle())
+                    .content(reference.getContent())
+                    .build();
+        }
     }
 
-     */
+
     @Transactional
     public void updateBoard(long boardNum, ReferenceDTO.Req req) {
         /*
@@ -109,7 +136,7 @@ public class ReferenceService {
             referenceChange.setContent((req.getContent()));
             return referenceChange;
         }).orElseThrow(NullPointerException::new);
-         */
+
         boolean reference = referenceRepository.findById(boardNum).isPresent();
         if(reference) {
             Reference reference1 = new Reference();
@@ -118,5 +145,7 @@ public class ReferenceService {
         } else {
             throw new NullPointerException();
         }
+        
+         */
     }
 }
