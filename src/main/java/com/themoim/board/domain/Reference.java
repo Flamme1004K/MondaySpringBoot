@@ -53,7 +53,7 @@ public class Reference extends BaseTime {
     업데이트 구문 ->
 
     */
-    public void update(ReferenceDto req) {
+    public void update(ReferenceDto.Req req) {
         this.title = req.getTitle();
         this.content = req.getContent();
     }

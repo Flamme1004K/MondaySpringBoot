@@ -5,6 +5,7 @@ import com.themoim.board.dto.ReferenceRespDto;
 import com.themoim.board.service.ReferenceService;
 import com.themoim.common.response.ResponseMessage;
 import io.swagger.annotations.ApiOperation;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,9 @@ public class ReferenceController {
     @PostMapping(value = "/{cn}")
     public ResponseEntity saveBoard(
             @PathVariable(name ="cn") String cn,
-            @Valid @RequestBody ReferenceDto referenceDto
-    ) {
-        referenceService.saveReference(cn, referenceDto);
+            @Valid @RequestBody ReferenceDto.Req req
+    ) throws NotFoundException {
+        referenceService.saveReference(cn, req);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
@@ -69,7 +70,7 @@ public class ReferenceController {
     @PutMapping(value = "/{boardNum}")
     public ResponseEntity boardUpdate(
             @PathVariable(name ="boardNum") long boardNum,
-            @RequestBody ReferenceDto.req req) {
+            @RequestBody ReferenceDto.Req req) {
         referenceService.updateBoard(boardNum,req);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
