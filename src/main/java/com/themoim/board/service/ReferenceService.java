@@ -154,20 +154,24 @@ public class ReferenceService {
                     return  referenceChange;
                 }
         ).orElseThrow(NullPointerException::new);
+        //1. Dto의 파일과 Req의 파일을 먼저 비교해야되지 않을까?
+        // 먼저 referenceFileLinkReposiotry에 대한 정보부터 얻어오자?
+        // old file과 new file의 사이즈 중에 가장 큰걸로 해야하지 않을까?
+        if(req.getFile().size() > 0) {
 
-        if(req.getFile().size()>0) {
-            for(FileLinkDTO.Req file : req.getFile()) {
-                referenceFileLinkRepository.findById(file.getId()).map(
-                        fileLink -> {
-                            fileLink.update(file.getLinkDomain());
-                            return fileLink;
-                        }
-                ).orElseGet(
-                       ReferenceFileLink::new
-                );
+            List<ReferenceFileLink> oldFileLink = reference.getReferenceFileLink();
+            List<FileLinkDTO.Req> newFileLink = req.getFile();
+            int fileLinkSize = Math.max(oldFileLink.size(), newFileLink.size());
+
+            for(int i=0; i < fileLinkSize; i++) {
+                boolean fileLink = referenceFileLinkRepository.findById(oldFileLink.get(i).getId()).equals(newFileLink.get(i).getId());
+                if(fileLink) {
+                    ReferenceFileLink file = ReferenceFileLink.builder().link(newFileLink.get(i).getLinkDomain()).build();
+                } else {
+
+                }
             }
+
         }
-
-
     }
 }
