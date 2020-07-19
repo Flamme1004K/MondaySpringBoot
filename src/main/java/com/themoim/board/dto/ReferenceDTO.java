@@ -24,25 +24,38 @@ public class ReferenceDTO {
             private String writtenName;
             private LocalDateTime createDate;
 
+            @Builder
+            public ListResp(Long no, String title, String writtenName, LocalDateTime createDate ) {
+                this.no = no;
+                this.title = title;
+                this.writtenName = writtenName;
+                this.createDate = createDate;
+            }
+
+            /*
             public ListResp(Reference reference) {
                 this.no = reference.getId();
                 this.title = reference.getTitle();
                 this.writtenName = reference.getWrittenBy().getUsername();
                 this.createDate = reference.getCreateAt();
             }
+
+             */
         }
 
         @Getter
         @NoArgsConstructor
         public static class Resp {
-
-            private long writtenId;
+            private long boardNo;
+            private String writtenName;
             private String title;
             private String content;
             private List<FileLinkDTO.Resp> file = new ArrayList<>();
 
-            public Resp(long writtenId, String title, String content, List<FileLinkDTO.Resp> file) {
-                this.writtenId = writtenId;
+            @Builder
+            public Resp(long boardNo, String writtenName, String title, String content, List<FileLinkDTO.Resp> file) {
+                this.boardNo = boardNo;
+                this.writtenName = writtenName;
                 this.title = title;
                 this.content = content;
                 this.file = file;

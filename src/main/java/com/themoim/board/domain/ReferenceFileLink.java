@@ -26,6 +26,14 @@ public class ReferenceFileLink {
 
     @ManyToOne
     @JoinColumn(name = "r_id")
-    @JsonBackReference
     private Reference reference;
+
+    public void update(String link){
+        this.link = link;
+    }
+
+    public ReferenceFileLink(String link, Reference reference) {
+        this.link = link;
+        this.reference = reference;
+    }
 }
