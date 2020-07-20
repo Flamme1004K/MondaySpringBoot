@@ -19,3 +19,16 @@ ArgumentResolver
 inner class 스태틱 일반 클래스 스태틱 차이점
 
 @ManyToMany의 차이점? 
+
+orElseGet과 Else의 차이?
+
+orElse는 null이던말던 항상 불립니다.
+orElseGet은 null일 때만 불립니다.
+ofNullable--> 비용이 비싸다.
+
+cascade = cascadeType=All?을 다시보자.
+
+Open- session - in - view 
+
+https://kingbbode.tistory.com/27
+https://ict-nroo.tistory.com/131
