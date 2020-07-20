@@ -32,3 +32,6 @@ Open- session - in - view
 
 https://kingbbode.tistory.com/27
 https://ict-nroo.tistory.com/131
+
+
+lambda foreach? stream map? 둘 중 
