@@ -41,7 +41,6 @@ public class Reference extends BaseTime {
     private Boolean isDeleted;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reference")
-    @JsonManagedReference
     private List<ReferenceFileLink> referenceFileLink = new ArrayList<>();
 
 
