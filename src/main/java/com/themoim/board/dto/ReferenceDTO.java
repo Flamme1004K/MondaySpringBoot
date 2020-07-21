@@ -11,18 +11,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+
 public class ReferenceDTO {
 
         @Getter
         @NoArgsConstructor
+        @ToString
         public static class ListResp {
             private Long no;
             private String title;
             private String writtenName;
             private LocalDateTime createDate;
+
 
             @Builder
             public ListResp(Long no, String title, String writtenName, LocalDateTime createDate ) {
@@ -31,6 +31,8 @@ public class ReferenceDTO {
                 this.writtenName = writtenName;
                 this.createDate = createDate;
             }
+
+
 
             /*
             public ListResp(Reference reference) {
@@ -43,6 +45,8 @@ public class ReferenceDTO {
              */
         }
 
+
+        /*static */
         @Getter
         @NoArgsConstructor
         public static class Resp {

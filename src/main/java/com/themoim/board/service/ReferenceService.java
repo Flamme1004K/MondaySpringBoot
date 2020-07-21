@@ -127,7 +127,6 @@ public class ReferenceService {
         }
     }
 
-
     @Transactional
     public void updateBoard(long boardNum, ReferenceDTO.Req req) {
         /*
@@ -157,6 +156,8 @@ public class ReferenceService {
         //1. Dto의 파일과 Req의 파일을 먼저 비교해야되지 않을까?
         // 먼저 referenceFileLinkReposiotry에 대한 정보부터 얻어오자?
         // old file과 new file의 사이즈 중에 가장 큰걸로 해야하지 않을까?
+        // --> 스터디 : 그냥 업데이트 해주는 방식?
+        // 너무 어렵게 생각했다.
         if(req.getFile().size() > 0) {
 
             List<ReferenceFileLink> oldFileLink = reference.getReferenceFileLink();

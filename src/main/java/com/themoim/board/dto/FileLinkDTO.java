@@ -24,7 +24,6 @@ public class FileLinkDTO {
     @Getter
     @NoArgsConstructor
     public static class Req{
-
         private long id;
         private String linkDomain;
 
