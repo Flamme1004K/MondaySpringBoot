@@ -7,6 +7,7 @@ import com.themoim.user.domain.Account;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +71,14 @@ public class ReferenceDTO {
         @NoArgsConstructor
         public static class Req {
             private long writtenId;
+
+            @NotBlank(message = "제목을 입력해주세요.")
+            @Size(max=50, message = "글자수는 50글자 밑으로 써주세요.")
             private String title;
+
+            @NotBlank(message = "내용을 입력해주세요.")
             private String content;
+
             private List<FileLinkDTO.Req> file = new ArrayList<>();
 
             @Builder
