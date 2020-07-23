@@ -3,6 +3,7 @@ package com.themoim.board.web;
 import com.themoim.board.domain.Reference;
 import com.themoim.board.dto.ReferenceDTO;
 import com.themoim.board.service.ReferenceService;
+import com.themoim.common.error.exception.InvalidValueException;
 import com.themoim.common.response.ResponseMessage;
 import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
@@ -42,7 +43,7 @@ public class ReferenceController {
     public ResponseEntity saveBoard(
             @PathVariable(name ="cn") String cn,
             @Valid @RequestBody ReferenceDTO.Req req
-    ) throws NotFoundException {
+    ) {
         referenceService.saveReference(cn, req);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }

@@ -65,6 +65,25 @@ public class ReferenceDTO {
                 this.content = content;
                 this.file = file;
             }
+
+            public static Resp isFile(Reference reference , List<FileLinkDTO.Resp> fileRespList){
+                return ReferenceDTO.Resp.builder()
+                        .boardNo(reference.getId())
+                        .writtenName(reference.getWrittenBy().getUsername())
+                        .title(reference.getTitle())
+                        .content(reference.getContent())
+                        .file(fileRespList)
+                        .build();
+            }
+
+            public static Resp notFile(Reference reference){
+                return ReferenceDTO.Resp.builder()
+                        .boardNo(reference.getId())
+                        .writtenName(reference.getWrittenBy().getUsername())
+                        .title(reference.getTitle())
+                        .content(reference.getContent())
+                        .build();
+            }
         }
 
         @Getter
